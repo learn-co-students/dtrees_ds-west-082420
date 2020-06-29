@@ -471,33 +471,89 @@ In Group 2 (female), I have: adoption, adoption, adoption, adoption, no adoption
 
 ```python
 #__SOLUTION__
-g1_l = 1 - ((1/3)**2 + (2/3)**2)
-g1_r = 1 - ((4/7)**2 + (3/7)**2)
+# gini no dog
+1-((1/3)**2 + (2/3)**2)
 
-gini_split = 3/10 * g1_l + (7/10) ** 2
-gini_split
+
 ```
+
+
+
+
+    0.4444444444444444
+
+
 
 
 ```python
 #__SOLUTION__
-g1_l = 1 - ((3/3)**2 + 0)
-g1_r = 1 - ((5/7)**2 + (2/7)**2)
-
-gini_split = 3/10 * g1_l + (7/10) ** 2
-gini_split
-g1_l+g1_r
+# gini dog
+(1-((4/7)**2 + (3/7)**2))
 ```
+
+
+
+
+    0.48979591836734704
+
+
 
 
 ```python
-#__SOLUTION
-dt = DecisionTreeClassifier(criterion='gini')
-X = example_sample.drop('adoption', axis=1)
-y = example_sample.adoption
-dtree = dt.fit(X,y)
-df.__dict__
+#__SOLUTION__
+# gini dog/no dog
+3/10*((1-((1/3)**2 + (2/3)**2))) + 7/10*((1-((4/7)**2 + (3/7)**2)))
 ```
+
+
+
+
+    0.4761904761904763
+
+
+
+
+```python
+#__SOLUTION__
+# gini male
+0
+```
+
+
+
+
+    0
+
+
+
+
+```python
+#__SOLUTION__
+# gini female
+
+((1-((5/7)**2 + (2/7)**2)))
+```
+
+
+
+
+    0.40816326530612246
+
+
+
+
+```python
+#__SOLUTION__
+# gini male/female
+7/10*(((1-((5/7)**2 + (2/7)**2))))
+```
+
+
+
+
+    0.2857142857142857
+
+
 
 
 ```python
@@ -514,6 +570,26 @@ export_graphviz(dtree, out_file=dot_data,
 graph = pydotplus.graph_from_dot_data(dot_data.getvalue())  
 Image(graph.create_png())
 ```
+
+    /Users/johnmaxbarry/anaconda3/lib/python3.7/site-packages/sklearn/externals/six.py:31: FutureWarning: The module is deprecated in version 0.21 and will be removed in version 0.23 since we've dropped support for Python 2.7. Please rely on the official version of six (https://pypi.org/project/six/).
+      "(https://pypi.org/project/six/).", FutureWarning)
+
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-9-f14d75c5eb62> in <module>
+          5 import pydotplus
+          6 dot_data = StringIO()
+    ----> 7 export_graphviz(dtree, out_file=dot_data,  
+          8                 filled=True, rounded=True,
+          9                 special_characters=True,
+
+
+    NameError: name 'dtree' is not defined
+
 
 # Caveat
 
