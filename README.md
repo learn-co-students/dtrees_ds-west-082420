@@ -445,16 +445,6 @@ Group 2 (dog): adoption, adoption, adoption, no adoption, no adoption, no adopti
 In Group 1 (male), I have: no adoption, no adoption, no adoption  
 In Group 2 (female), I have: adoption, adoption, adoption, adoption, no adoption, no adoption, adoption
 
-
-```python
-#__SOLUTION
-dt = DecisionTreeClassifier(criterion='gini')
-X = example_sample.drop('adoption', axis=1)
-y = example_sample.adoption
-dtree = dt.fit(X,y)
-df.__dict__
-```
-
 # Caveat
 
 
