@@ -1,9 +1,11 @@
 import numpy as np
 import pandas as pd
 
+
 def is_female(sex_cell):
     """
-    :param sex_series: an element of the sex_upon_outcome series with 5 sex types
+    :param sex_series: an element of the sex_upon_outcome
+                                    series with 5 sex types.
         Neutered Male
         Spayed Female
         Intact Male
@@ -19,6 +21,7 @@ def is_female(sex_cell):
     else:
         return 'male'
 
+
 def female_binary(sex_cell):
     """
     :return: 1 for female, 0 for male
@@ -29,9 +32,11 @@ def female_binary(sex_cell):
     else:
         return 0
 
+
 def outcome_binary(outcome_element):
     """
-    :param outcome_element: an element from the outcome series in the shelter dataset
+    :param outcome_element: an element from the outcome series
+                                        in the shelter dataset
         Adoption
         Transfer
         Return to Owner
@@ -49,6 +54,7 @@ def outcome_binary(outcome_element):
     else:
         return 0
 
+
 def animal_type(animal_element):
     """
     :param animal_element:
@@ -65,6 +71,7 @@ def animal_type(animal_element):
 
     else:
         return 0
+
 
 def age_to_days(age_element):
 
@@ -94,18 +101,20 @@ def age_to_days(age_element):
         return int(age_split[0]) * 365
 
 
-
 def preprocess_df(df):
+
     """
     :param df:
     :return:
     """
 
-    df['age_in_days'] = pd.to_datetime(df['datetime']) - pd.to_datetime(df['date_of_birth'])
+    df['age_in_days'] = pd.to_datetime(df['datetime'])\
+        - pd.to_datetime(df['date_of_birth'])
+
     df['age_in_days'] = df['age_in_days'].apply(lambda x: x.days)
+
     df = df[(df.animal_type == 'Dog') | (df.animal_type == 'Cat')]
     df['is_dog'] = df['animal_type'].apply(animal_type)
-
 
     df['is_female'] = df['sex_upon_outcome'].apply(is_female)
     df = df[df.is_female != 'unknown']
@@ -115,6 +124,3 @@ def preprocess_df(df):
     df = df[['is_dog', 'age_in_days', 'is_female', 'adoption']]
 
     return df
-
-
-
