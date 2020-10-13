@@ -22,7 +22,7 @@ from src.student_list import student_first_names
 one_random_student(student_first_names)
 ```
 
-    Angie
+    Sindhu
 
 
 
@@ -50,8 +50,6 @@ if module_path not in sys.path:
 
 
 ```python
-import pandas as pd
-import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 
@@ -137,7 +135,7 @@ animal_shelter.head()
   </thead>
   <tbody>
     <tr>
-      <td>0</td>
+      <th>0</th>
       <td>A819400</td>
       <td>2020-06-28T08:22:00.000</td>
       <td>2020-06-28T08:22:00.000</td>
@@ -152,7 +150,7 @@ animal_shelter.head()
       <td>NaN</td>
     </tr>
     <tr>
-      <td>1</td>
+      <th>1</th>
       <td>A819025</td>
       <td>2020-06-27T15:26:00.000</td>
       <td>2020-06-27T15:26:00.000</td>
@@ -167,7 +165,7 @@ animal_shelter.head()
       <td>*Eloise</td>
     </tr>
     <tr>
-      <td>2</td>
+      <th>2</th>
       <td>A818693</td>
       <td>2020-06-27T14:21:00.000</td>
       <td>2020-06-27T14:21:00.000</td>
@@ -182,7 +180,7 @@ animal_shelter.head()
       <td>*Aislinn</td>
     </tr>
     <tr>
-      <td>3</td>
+      <th>3</th>
       <td>A809756</td>
       <td>2020-06-27T12:43:00.000</td>
       <td>2020-06-27T12:43:00.000</td>
@@ -197,7 +195,7 @@ animal_shelter.head()
       <td>Roxy</td>
     </tr>
     <tr>
-      <td>4</td>
+      <th>4</th>
       <td>A819382</td>
       <td>2020-06-27T10:19:00.000</td>
       <td>2020-06-27T10:19:00.000</td>
@@ -274,35 +272,35 @@ df.head()
   </thead>
   <tbody>
     <tr>
-      <td>1</td>
+      <th>1</th>
       <td>0</td>
       <td>46</td>
       <td>1</td>
       <td>0</td>
     </tr>
     <tr>
-      <td>2</td>
+      <th>2</th>
       <td>0</td>
       <td>136</td>
       <td>1</td>
       <td>1</td>
     </tr>
     <tr>
-      <td>3</td>
+      <th>3</th>
       <td>1</td>
       <td>575</td>
       <td>1</td>
       <td>1</td>
     </tr>
     <tr>
-      <td>5</td>
+      <th>5</th>
       <td>0</td>
       <td>748</td>
       <td>1</td>
       <td>0</td>
     </tr>
     <tr>
-      <td>6</td>
+      <th>6</th>
       <td>0</td>
       <td>75</td>
       <td>0</td>
@@ -371,31 +369,31 @@ X_train.head()
   </thead>
   <tbody>
     <tr>
-      <td>13</td>
+      <th>13</th>
       <td>0</td>
       <td>79</td>
       <td>1</td>
     </tr>
     <tr>
-      <td>934</td>
+      <th>934</th>
       <td>0</td>
       <td>738</td>
       <td>1</td>
     </tr>
     <tr>
-      <td>416</td>
+      <th>416</th>
       <td>0</td>
       <td>39</td>
       <td>1</td>
     </tr>
     <tr>
-      <td>912</td>
+      <th>912</th>
       <td>0</td>
       <td>733</td>
       <td>1</td>
     </tr>
     <tr>
-      <td>882</td>
+      <th>882</th>
       <td>1</td>
       <td>423</td>
       <td>0</td>
@@ -433,7 +431,7 @@ With your knowledge built up thus far, build an FSM: fit a dtree and score it on
 one_random_student(student_first_names)
 ```
 
-    Angie
+    Josh
 
 
 
@@ -452,9 +450,8 @@ y_hat_val = None
 
 
 ```python
-from sklearn.metrics import confusion_matrix
-import seaborn as sns
-import matplotlib.pyplot as plt
+from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score, f1_score, roc_auc_score
+
 
 cm = confusion_matrix(y_val, y_hat_val)
 cm
@@ -563,61 +560,61 @@ example_sample.head(10)
   </thead>
   <tbody>
     <tr>
-      <td>0</td>
+      <th>0</th>
       <td>1</td>
       <td>1</td>
       <td>1</td>
     </tr>
     <tr>
-      <td>1</td>
+      <th>1</th>
       <td>0</td>
       <td>1</td>
       <td>1</td>
     </tr>
     <tr>
-      <td>2</td>
+      <th>2</th>
       <td>1</td>
       <td>1</td>
       <td>1</td>
     </tr>
     <tr>
-      <td>3</td>
+      <th>3</th>
       <td>1</td>
       <td>1</td>
       <td>1</td>
     </tr>
     <tr>
-      <td>4</td>
+      <th>4</th>
       <td>1</td>
       <td>1</td>
       <td>0</td>
     </tr>
     <tr>
-      <td>5</td>
+      <th>5</th>
       <td>1</td>
       <td>0</td>
       <td>0</td>
     </tr>
     <tr>
-      <td>6</td>
+      <th>6</th>
       <td>0</td>
       <td>1</td>
       <td>0</td>
     </tr>
     <tr>
-      <td>7</td>
+      <th>7</th>
       <td>0</td>
       <td>0</td>
       <td>0</td>
     </tr>
     <tr>
-      <td>8</td>
+      <th>8</th>
       <td>1</td>
       <td>0</td>
       <td>0</td>
     </tr>
     <tr>
-      <td>9</td>
+      <th>9</th>
       <td>1</td>
       <td>1</td>
       <td>1</td>
@@ -677,11 +674,20 @@ dt = DecisionTreeClassifier(criterion='entropy')
 X = example_sample.drop('adoption', axis=1)
 y = example_sample.adoption
 dtree = dt.fit(X,y)
+```
+
+
+```python
+from sklearn.externals.six import StringIO  
+from IPython.display import Image  
+from sklearn.tree import export_graphviz
+import pydotplus
 
 dot_data = StringIO()
 export_graphviz(dt, out_file=dot_data,  
                 filled=True, rounded=True,
-                special_characters=True)
+                special_characters=True,
+                feature_names=X.columns)
 graph = pydotplus.graph_from_dot_data(dot_data.getvalue())  
 Image(graph.create_png())
 ```
@@ -689,7 +695,7 @@ Image(graph.create_png())
 
 
 
-![png](index_files/index_38_0.png)
+![png](index_files/index_39_0.png)
 
 
 
@@ -871,10 +877,6 @@ X = example_sample.drop('adoption', axis=1)
 y = example_sample.adoption
 dt_gini = dt_gini.fit(X,y)
 
-from sklearn.externals.six import StringIO  
-from IPython.display import Image  
-from sklearn.tree import export_graphviz
-import pydotplus
 dot_data = StringIO()
 export_graphviz(dt_gini, out_file=dot_data,  
                 filled=True, rounded=True,
@@ -887,7 +889,7 @@ Image(graph.create_png())
 
 
 
-![png](index_files/index_55_0.png)
+![png](index_files/index_56_0.png)
 
 
 
@@ -915,16 +917,10 @@ As found in *Introduction to Data Mining* by Tan et. al:
 
 # 4. Issues with Decision Trees
   
-  - Decision trees have advantages:   
-     - They are highly interpretable and require little data preparation (no need to normalize/scale data).  
-     - They can serve as a good FSM and help improve our insight about feature importance through visualization of trees (and feature_importances_ attribue).  
-    
-    
-  - But they also have disadvantages: 
-     - They are prone to overfitting.
-     - They are highly dependent on the training data: small differences in training sets produce completely different trees.
-     - They are susceptible to class imbalance.
-     - They are greedy.
+  - They are prone to overfitting.
+  - They are highly dependent on the training data: small differences in training sets produce completely different trees.
+  - They are susceptible to class imbalance.
+  - They are greedy.
      
 
 
@@ -990,31 +986,31 @@ X.head()
   </thead>
   <tbody>
     <tr>
-      <td>1</td>
+      <th>1</th>
       <td>0</td>
       <td>46</td>
       <td>1</td>
     </tr>
     <tr>
-      <td>2</td>
+      <th>2</th>
       <td>0</td>
       <td>136</td>
       <td>1</td>
     </tr>
     <tr>
-      <td>3</td>
+      <th>3</th>
       <td>1</td>
       <td>575</td>
       <td>1</td>
     </tr>
     <tr>
-      <td>5</td>
+      <th>5</th>
       <td>0</td>
       <td>748</td>
       <td>1</td>
     </tr>
     <tr>
-      <td>6</td>
+      <th>6</th>
       <td>0</td>
       <td>75</td>
       <td>0</td>
@@ -1027,15 +1023,12 @@ X.head()
 
 
 ```python
-from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42, test_size=.2)
 X_t, X_val, y_t, y_val = train_test_split(X_train, y_train, random_state=42, test_size=.25)
 ```
 
 
 ```python
-from sklearn.tree import DecisionTreeClassifier
-
 dt = DecisionTreeClassifier()
 
 dt.fit(X_t,y_t)
@@ -1045,21 +1038,17 @@ dt.fit(X_t,y_t)
 
 
 
-    DecisionTreeClassifier(class_weight=None, criterion='gini', max_depth=None,
-                           max_features=None, max_leaf_nodes=None,
+    DecisionTreeClassifier(ccp_alpha=0.0, class_weight=None, criterion='gini',
+                           max_depth=None, max_features=None, max_leaf_nodes=None,
                            min_impurity_decrease=0.0, min_impurity_split=None,
                            min_samples_leaf=1, min_samples_split=2,
-                           min_weight_fraction_leaf=0.0, presort=False,
+                           min_weight_fraction_leaf=0.0, presort='deprecated',
                            random_state=None, splitter='best')
 
 
 
 
 ```python
-from sklearn.externals.six import StringIO  
-from IPython.display import Image  
-from sklearn.tree import export_graphviz
-import pydotplus
 dot_data = StringIO()
 export_graphviz(dt, out_file=dot_data,  
                 filled=True, rounded=True,
@@ -1071,7 +1060,7 @@ Image(graph.create_png())
 
 
 
-![png](index_files/index_66_0.png)
+![png](index_files/index_67_0.png)
 
 
 
@@ -1101,7 +1090,7 @@ dt.score(X_val, y_val)
 
 
 
-    0.6906077348066298
+    0.6850828729281768
 
 
 
@@ -1158,7 +1147,7 @@ Image(graph.create_png())
 
 
 
-![png](index_files/index_75_0.png)
+![png](index_files/index_76_0.png)
 
 
 
@@ -1189,7 +1178,7 @@ Image(graph.create_png())
 
 
 
-![png](index_files/index_78_0.png)
+![png](index_files/index_79_0.png)
 
 
 
@@ -1218,7 +1207,7 @@ Image(graph.create_png())
 
 
 
-![png](index_files/index_80_0.png)
+![png](index_files/index_81_0.png)
 
 
 
@@ -1265,15 +1254,11 @@ gs = GridSearchCV(DecisionTreeClassifier(), param_grid=param_grid, cv=4,
 gs.fit(X_train, y_train)
 ```
 
-    /Users/johnmaxbarry/anaconda3/envs/learn-env/lib/python3.6/site-packages/sklearn/model_selection/_search.py:813: DeprecationWarning: The default of the `iid` parameter will change from True to False in version 0.22 and will be removed in 0.24. This will change numeric results when test-set sizes are unequal.
-      DeprecationWarning)
 
 
 
-
-
-    GridSearchCV(cv=4, error_score='raise-deprecating',
-                 estimator=DecisionTreeClassifier(class_weight=None,
+    GridSearchCV(cv=4, error_score=nan,
+                 estimator=DecisionTreeClassifier(ccp_alpha=0.0, class_weight=None,
                                                   criterion='gini', max_depth=None,
                                                   max_features=None,
                                                   max_leaf_nodes=None,
@@ -1282,9 +1267,10 @@ gs.fit(X_train, y_train)
                                                   min_samples_leaf=1,
                                                   min_samples_split=2,
                                                   min_weight_fraction_leaf=0.0,
-                                                  presort=False, random_state=None,
+                                                  presort='deprecated',
+                                                  random_state=None,
                                                   splitter='best'),
-                 iid='warn', n...
+                 iid='de...
                  param_grid=[{'criterion': ['gini', 'entropy'],
                               'max_depth': [2, 3, 4, 5, 6, 7, 8, 9],
                               'max_leaf_nodes': [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
@@ -1316,7 +1302,7 @@ gs.best_score_
 
 
 
-    0.7313019390581718
+    0.7313228974831185
 
 
 
@@ -1373,17 +1359,17 @@ df.color.value_counts()
 
 
 
-    Black/White         96
-    Black               73
-    Brown/White         43
-    White               38
-    Brown Tabby         38
-                        ..
-    White/Blue Merle     1
-    Black/Tricolor       1
-    Tricolor/Black       1
-    White/Chocolate      1
-    Fawn/White           1
+    Black/White            96
+    Black                  73
+    Brown/White            43
+    White                  38
+    Brown Tabby            38
+                           ..
+    Black/Brown Brindle     1
+    Chocolate/Tan           1
+    Apricot                 1
+    Sable/Black             1
+    White/Cream Tabby       1
     Name: color, Length: 112, dtype: int64
 
 
@@ -1421,7 +1407,7 @@ df.color.value_counts()
 X = df.drop('adoption', axis=1)
 y = df.adoption
 
-X = X.join(pd.get_dummies(X.color, drop_first=True))
+X = X.join(pd.get_dummies(X.color))
 X.drop('color', axis=1, inplace=True)
 X.head()
 ```
@@ -1450,6 +1436,7 @@ X.head()
       <th>is_dog</th>
       <th>age_in_days</th>
       <th>is_female</th>
+      <th>Black</th>
       <th>White</th>
       <th>other</th>
     </tr>
@@ -1460,45 +1447,51 @@ X.head()
       <th></th>
       <th></th>
       <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>1</td>
+      <th>1</th>
       <td>0</td>
       <td>46</td>
       <td>1</td>
       <td>0</td>
+      <td>0</td>
       <td>1</td>
     </tr>
     <tr>
-      <td>2</td>
+      <th>2</th>
       <td>0</td>
       <td>136</td>
       <td>1</td>
       <td>0</td>
+      <td>0</td>
       <td>1</td>
     </tr>
     <tr>
-      <td>3</td>
+      <th>3</th>
       <td>1</td>
       <td>575</td>
       <td>1</td>
       <td>0</td>
+      <td>0</td>
       <td>1</td>
     </tr>
     <tr>
-      <td>5</td>
+      <th>5</th>
       <td>0</td>
       <td>748</td>
       <td>1</td>
       <td>0</td>
+      <td>0</td>
       <td>1</td>
     </tr>
     <tr>
-      <td>6</td>
+      <th>6</th>
       <td>0</td>
       <td>75</td>
+      <td>0</td>
       <td>0</td>
       <td>0</td>
       <td>1</td>
@@ -1526,15 +1519,11 @@ gs = GridSearchCV(DecisionTreeClassifier(), param_grid=param_grid, cv=4,
 gs.fit(X_train, y_train)
 ```
 
-    /Users/johnmaxbarry/anaconda3/envs/learn-env/lib/python3.6/site-packages/sklearn/model_selection/_search.py:813: DeprecationWarning: The default of the `iid` parameter will change from True to False in version 0.22 and will be removed in 0.24. This will change numeric results when test-set sizes are unequal.
-      DeprecationWarning)
 
 
 
-
-
-    GridSearchCV(cv=4, error_score='raise-deprecating',
-                 estimator=DecisionTreeClassifier(class_weight=None,
+    GridSearchCV(cv=4, error_score=nan,
+                 estimator=DecisionTreeClassifier(ccp_alpha=0.0, class_weight=None,
                                                   criterion='gini', max_depth=None,
                                                   max_features=None,
                                                   max_leaf_nodes=None,
@@ -1543,9 +1532,10 @@ gs.fit(X_train, y_train)
                                                   min_samples_leaf=1,
                                                   min_samples_split=2,
                                                   min_weight_fraction_leaf=0.0,
-                                                  presort=False, random_state=None,
+                                                  presort='deprecated',
+                                                  random_state=None,
                                                   splitter='best'),
-                 iid='warn', n_jobs=None,
+                 iid='deprecated', n_jobs=None,
                  param_grid=[{'criterion': ['gini', 'entropy'],
                               'max_depth': [2, 3, 4, 5, 6, 7, 8, 9],
                               'max_leaf_nodes': [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
@@ -1563,7 +1553,7 @@ gs.best_score_
 
 
 
-    0.7299168975069252
+    0.7299340085942296
 
 
 
@@ -1581,7 +1571,7 @@ Image(graph.create_png())
 
 
 
-![png](index_files/index_98_0.png)
+![png](index_files/index_99_0.png)
 
 
 
@@ -1602,6 +1592,7 @@ for fi, feature in zip(gs.best_estimator_.feature_importances_, X_train.columns)
     0.04623807055011041 is_dog
     0.9368897444155458 age_in_days
     0.016872185034343727 is_female
+    0.0 Black
     0.0 White
     0.0 other
 
