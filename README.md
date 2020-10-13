@@ -10,6 +10,21 @@
 5. Feature Importances
 6. Grid Search
 
+# Discussion Question
+
+What effect does L1 lasso penalty have on model coefficients?  
+What effect does L2 ridge penalty have on model coefficients?
+
+
+```python
+from src.student_caller import one_random_student, three_random_students
+from src.student_list import student_first_names
+one_random_student(student_first_names)
+```
+
+    Angie
+
+
 
 ```python
 import pandas as pd
@@ -29,23 +44,23 @@ if module_path not in sys.path:
     sys.path.append(module_path)
 ```
 
+    The autoreload extension is already loaded. To reload it, use:
+      %reload_ext autoreload
+
+
 
 ```python
 import pandas as pd
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
-from src.student_caller import one_random_student, pairs
 
 import warnings
 warnings.filterwarnings('ignore')
 
-mccalister = ['Adam', 'Amanda','Chum', 'Dann',
- 'Jacob', 'Jason', 'Johnhoy', 'Karim',
-'Leana','Luluva', 'Matt', 'Maximilian','Syd' ]
 ```
 
-# FSM and Metric Discussion
+# 1. FSM and Metric Discussion
 
 
 ```python
@@ -58,46 +73,262 @@ mccalister = ['Adam', 'Amanda','Chum', 'Dann',
 
 
 ```python
+# Let's return to our Austin Animal shelter data.
+
 animal_shelter = pd.read_csv('data/austin.csv')
-```
-
-
-```python
 animal_shelter.set_index('Unnamed: 0', inplace=True)
 ```
 
 
 ```python
-from src.shelter_preprocess import preprocess_df
-```
-
-
-```python
-animal_shelter.age_upon_outcome.isna().sum()
+# We will convert the original dataframe shown below.
 animal_shelter.head()
 ```
 
 
-```python
-animal_shelter.dropna(subset=['age_upon_outcome'], inplace=True )
-df = preprocess_df(animal_shelter)
 
-df.shape
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>animal_id</th>
+      <th>datetime</th>
+      <th>monthyear</th>
+      <th>date_of_birth</th>
+      <th>outcome_type</th>
+      <th>outcome_subtype</th>
+      <th>animal_type</th>
+      <th>sex_upon_outcome</th>
+      <th>age_upon_outcome</th>
+      <th>breed</th>
+      <th>color</th>
+      <th>name</th>
+    </tr>
+    <tr>
+      <th>Unnamed: 0</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>A819400</td>
+      <td>2020-06-28T08:22:00.000</td>
+      <td>2020-06-28T08:22:00.000</td>
+      <td>2018-06-27T00:00:00.000</td>
+      <td>Euthanasia</td>
+      <td>Suffering</td>
+      <td>Other</td>
+      <td>Unknown</td>
+      <td>2 years</td>
+      <td>Squirrel</td>
+      <td>Brown/White</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>A819025</td>
+      <td>2020-06-27T15:26:00.000</td>
+      <td>2020-06-27T15:26:00.000</td>
+      <td>2020-05-12T00:00:00.000</td>
+      <td>Died</td>
+      <td>In Foster</td>
+      <td>Cat</td>
+      <td>Intact Female</td>
+      <td>1 month</td>
+      <td>Domestic Shorthair Mix</td>
+      <td>Blue Tabby</td>
+      <td>*Eloise</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>A818693</td>
+      <td>2020-06-27T14:21:00.000</td>
+      <td>2020-06-27T14:21:00.000</td>
+      <td>2020-02-12T00:00:00.000</td>
+      <td>Adoption</td>
+      <td>NaN</td>
+      <td>Cat</td>
+      <td>Spayed Female</td>
+      <td>4 months</td>
+      <td>Domestic Shorthair</td>
+      <td>Orange Tabby</td>
+      <td>*Aislinn</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>A809756</td>
+      <td>2020-06-27T12:43:00.000</td>
+      <td>2020-06-27T12:43:00.000</td>
+      <td>2018-11-30T00:00:00.000</td>
+      <td>Adoption</td>
+      <td>NaN</td>
+      <td>Dog</td>
+      <td>Spayed Female</td>
+      <td>1 year</td>
+      <td>Labrador Retriever/Pit Bull</td>
+      <td>Brown/Tricolor</td>
+      <td>Roxy</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>A819382</td>
+      <td>2020-06-27T10:19:00.000</td>
+      <td>2020-06-27T10:19:00.000</td>
+      <td>2018-06-27T00:00:00.000</td>
+      <td>Euthanasia</td>
+      <td>Suffering</td>
+      <td>Other</td>
+      <td>Unknown</td>
+      <td>2 years</td>
+      <td>Raccoon</td>
+      <td>Gray/Black</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+```python
+from src.shelter_preprocess import preprocess_df
+
+auo_na = animal_shelter.age_upon_outcome.isna().sum()
+# We will convert age_upon_outcome to an integer
+# and need to drop N/A's before applying a preprocessor.
+
+animal_shelter.dropna(subset=['age_upon_outcome'], inplace=True )
+print(f'{auo_na} age_upon_outome N/A\'s dropped')
 ```
 
+    6 age_upon_outome N/A's dropped
+
+
 
 ```python
+df = preprocess_df(animal_shelter)
 df.head()
 ```
 
 
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>is_dog</th>
+      <th>age_in_days</th>
+      <th>is_female</th>
+      <th>adoption</th>
+    </tr>
+    <tr>
+      <th>Unnamed: 0</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>0</td>
+      <td>46</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>0</td>
+      <td>136</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>1</td>
+      <td>575</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>0</td>
+      <td>748</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>0</td>
+      <td>75</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+# New sklearn module: tree
+https://scikit-learn.org/stable/modules/tree.html
+
+
 ```python
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.model_selection import train_test_split
 ```
 
 
 ```python
+# Per usual, let's set a test set off to the side.  
+# We will build our model exclusively on the training set.
+
+from sklearn.model_selection import train_test_split
+
 X = df.drop(['adoption'], axis=1)
 y = df.adoption
 
@@ -107,36 +338,135 @@ X_train.head()
 ```
 
 
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>is_dog</th>
+      <th>age_in_days</th>
+      <th>is_female</th>
+    </tr>
+    <tr>
+      <th>Unnamed: 0</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>13</td>
+      <td>0</td>
+      <td>79</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>934</td>
+      <td>0</td>
+      <td>738</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>416</td>
+      <td>0</td>
+      <td>39</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>912</td>
+      <td>0</td>
+      <td>733</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>882</td>
+      <td>1</td>
+      <td>423</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
 ```python
+# Let's do a secondary train/val split.  
+# I'll set test_size to .25 to match my crossval 4 fold used later.
+
 X_t, X_val, y_t, y_val = train_test_split(X_train,y_train, random_state=42, test_size = .25)
-X_t.head()
+
+print(f"X_t   {X_t.shape[0]} and y_t   {y_t.shape[0]} have the same number of records\n")
+print(f"X_val {X_val.shape[0]} and y_val {y_val.shape[0]} have the same number of records\n")
+
+```
+
+    X_t   541 and y_t   541 have the same number of records
+    
+    X_val 181 and y_val 181 have the same number of records
+    
+
+
+The methods associated with fitting decision tree classifier are similar to those attached to linear, logistic or knn.  
+
+With your knowledge built up thus far, build an FSM: fit a dtree and score it on the validation set.
+
+
+```python
+one_random_student(student_first_names)
+```
+
+    Angie
+
+
+
+```python
+# Instantiate the classifier object
+dt = None
+
+# Fit on training set
+
+# Store predictions in a variable
+y_hat_val = None
+
+# Score on both training and validation sets
+
 ```
 
 
 ```python
-dt = DecisionTreeClassifier()
-dt.fit(X_t, y_t)
-y_hat_val = dt.predict(X_val)
-print(f'Training Score: {dt.score(X_t, y_t)}')
-print(f'Val      Score: {dt.score(X_val, y_val)}')
+from sklearn.metrics import confusion_matrix
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+cm = confusion_matrix(y_val, y_hat_val)
+cm
 ```
 
 
-```python
-y_val.value_counts()
-```
 
 
-```python
-np.unique(y_hat_val, return_counts=True)
-```
+    array([[70, 25],
+           [32, 54]])
 
 
-```python
-from src.confusion import plot_confusion_matrix
-from sklearn.metrics import confusion_matrix, f1_score, roc_auc_score, accuracy_score, recall_score, precision_score
-plot_confusion_matrix(confusion_matrix(y_val, y_hat_val),classes=['no_adoption', 'adoption'])
-```
 
 
 ```python
@@ -152,30 +482,28 @@ print(f'roc_auc_score{roc_auc_score(y_val, y_hat_val)}')
 
 ```
 
+    Accuracy Score: 0.6850828729281768
+    -------------------
+    Precision score: 0.6835443037974683
+    -------------------
+    Recall Score: 0.627906976744186
+    -------------------
+    f1_score: 0.6545454545454547
+    -------------------
+    roc_auc_score0.682374541003672
+
+
 If you were building a model for the animal shelter, which metric would you focus on?
 
 # 2. Decision Trees at a High Level
 
-The **CART algorithm** is structured as a sequence of questions to try and split up the different observations into their own groups. The result of these questions is a tree like structure where the ends are terminal nodes at which point there are no more questions.  A simple example of a decision tree is as follows:
+The **CART (Classification and Regression Trees) algorithm** is structured as a sequence of questions to try and split up the different observations into their own groups. The result of these questions is a tree like structure where the ends are **terminal nodes** (leaves) at which point there are no more questions.  A simple example of a decision tree is as follows:
 
 <img src='./img/titanic_tree.png' width=600/>
 
 A decision tree is a machine learning model that works by partitioning our sample space in a hierarchical way.
 
-How do we partition the space? The key idea is that some attributes provide more information than others when trying to make a decision.
-
-# In Pairs (private message): 
-    
-You are a triage nurse at a hospital being inundated with patients who believe they are suffering from coronavirus.  You neeed to quickly assess which patients are most likely to have coronavirus, and separate them from the rest of the patients.      
-
-Based on what you know of the virus, create a list of a few questions and a flow chart to help you to quickly decide which patients should be separated.  
-
-
-```python
-from src.student_caller import pairs
-
-pairs(mccalister)
-```
+How do we partition the space? The key idea is that some attributes provide **more information** than others when trying to make a decision.
 
 ## High level of how the Decision Tree algorithm works
 
@@ -206,6 +534,99 @@ example_sample.drop('age_in_days',axis=1, inplace=True)
 example_sample.reset_index(inplace=True, drop=True)
 example_sample.head(10)
 ```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>is_dog</th>
+      <th>is_female</th>
+      <th>adoption</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
 
 ## Partitioning
 
@@ -240,38 +661,37 @@ Would a different question split our data more effectively? Let's try:
 
 ### Is the animal female?
 
-Let's look at our splits:
+In pairs, examine whether this would be a better or worse split than the is_dog split.
 
-- Group 1 (Female = 0):
+> Take notes here
 
-data points: 5,7,8
-
-- Group 2 (Female = 1):
-
-
-data points: 0,1,2,3,4,6,9
-
-
-In Group 1, I have: no adoption, no adoption, no adoption  
-In Group 2, I have: adoption, adoption, adoption, adoption, no adoption, no adoption, adoption
-
-That seems better:  
-  - Group 1 is a pure group, no adoption when sex is male
-  - Group 2 has 5/7 adoptions.
-  
-This seems like a much better split.
-
-So a (very simple!) model based on the above sample predicts:  
-(i) A female animal will be adopted  
-(ii) A male animal will not be adopted  
-
-would perform fairly well.  
-
-But how would my partition be *best* split? And how do I really know that the second split is better than the first? Can I do better than intuition here?  
+But how would my partition be *best* split? How do I really know one split is better than the other? Can I do better than intuition here?  
 
 # 3. Entropy/Information Gain and Gini
 
 The goal is to have our ultimate classes be fully "ordered" (for a binary dependent variable, we'd have the 1's in one group and the 0's in the other). So one way to assess the value of a split is to measure how *disordered* our groups are, and there is a notion of *entropy* that measures precisely this.
+
+
+```python
+dt = DecisionTreeClassifier(criterion='entropy')
+X = example_sample.drop('adoption', axis=1)
+y = example_sample.adoption
+dtree = dt.fit(X,y)
+
+dot_data = StringIO()
+export_graphviz(dt, out_file=dot_data,  
+                filled=True, rounded=True,
+                special_characters=True)
+graph = pydotplus.graph_from_dot_data(dot_data.getvalue())  
+Image(graph.create_png())
+```
+
+
+
+
+![png](index_files/index_38_0.png)
+
+
 
 The entropy of the whole dataset is given by:
 
@@ -293,18 +713,21 @@ $-0.5*\log_2(0.5) -0.5*\log_2(0.5)$.
 
 Let's use the ``numpy's`` `log2()` function to calculate this:
 
-
-```python
-(-.5) * np.log2(.5) - (.5) * np.log2(.5)
-```
-
-Now, on your own, calculate the entropy of the training set.
+Now, let's calculate the entropy of the training set.
 
 
 ```python
-one_random_student(mccalister)
+values, counts = None, None
 
-# your code here
+
+p_0 = None
+p_1 = None
+
+def entropy(p_0,p_1):
+    
+    "entropy of a dataset with binary outcomes"
+    
+    pass
 ```
 
 To calculate the entropy of a *split*, we're going to want to calculate the entropy of each of the groups made by the split, and then calculate a weighted average of those groups' entropies––weighted, that is, by the size of the groups. Let's calculate the entropy of the split produced by our "is our animal a dog" question:
@@ -323,23 +746,34 @@ $E_{g2} = -\frac{3}{7} * \log_2\left(\frac{3}{7}\right) - \frac{4}{7} * \log_2\l
 
 
 ```python
-Egc = (-2/3)*np.log2(2/3) - (1/3)*np.log2(1/3)
-print(Egc)
+Eg1 = (-2/3)*np.log2(2/3) - (1/3)*np.log2(1/3)
+print(Eg1)
 
-Egd =(-3/7)*np.log2(3/7) - (4/7)*np.log2(4/7)
-print(Egd)
+Eg2 =(-3/7)*np.log2(3/7) - (4/7)*np.log2(4/7)
+print(Eg2)
 ```
+
+    0.9182958340544896
+    0.9852281360342515
+
 
 Now weight those by the probability of each group, and sum them, to find the entropy of the split:
 
 
 ```python
-pgc = (3/10) * Egc
-pgd = (7/10) * Egd
+pg1 = (3/10) * Eg1
+pg2 = (7/10) * Eg2
 
-E_split_d = pgc + pgd
+E_split_d = pg1 + pg2
 E_split_d
 ```
+
+
+
+
+    0.965148445440323
+
+
 
 Compare that to the male/female question:
 
@@ -358,6 +792,10 @@ print(Egf)
 
 ```
 
+    -0.0
+    0.863120568566631
+
+
 Weighted sum
 
 
@@ -368,6 +806,13 @@ pgf = Egf * 7/10
 E_split_f = pgm + pgf
 E_split_f
 ```
+
+
+
+
+    0.6041843979966417
+
+
 
 For a given split, the **information gain** is simply the entropy of the parent group less the entropy of the split.
 
@@ -387,6 +832,10 @@ print(f"Information gain male/female: {ig_f}")
 
 ```
 
+    Information gain dog/cat: 0.034851554559677034
+    Information gain male/female: 0.3958156020033583
+
+
 For a given parent, then, we maximize our model's performance by *minimizing* the split's entropy.
 
 What we'd like to do then is:
@@ -398,31 +847,6 @@ In practice there are far too many splits for it to be practical for a person to
 
 ... but we can make computers do these calculations for us!
 
-
-```python
-dt = DecisionTreeClassifier(criterion='entropy')
-X = example_sample.drop('adoption', axis=1)
-y = example_sample.adoption
-dtree = dt.fit(X,y)
-df.__dict__
-
-```
-
-
-```python
-from sklearn.externals.six import StringIO  
-from IPython.display import Image  
-from sklearn.tree import export_graphviz
-import pydotplus
-dot_data = StringIO()
-export_graphviz(dtree, out_file=dot_data,  
-                filled=True, rounded=True,
-                special_characters=True, 
-               feature_names=X.columns)
-graph = pydotplus.graph_from_dot_data(dot_data.getvalue())  
-Image(graph.create_png())
-```
-
 ## Gini Impurity
 
 An alternative metric to entropy comes from the work of Corrado Gini. The Gini Impurity is defined as:
@@ -433,17 +857,54 @@ where, again, $p_i$ is the probability of belonging to the $i$th group.
 
 **Gini Impurity will always be between 0 and 0.5. The closer to 0.5, the more disordered your group.**
 
-# Pairs (3 minutes)
+# Pairs (7 minutes)
 
-- Calculate the Gini score for both the dog split and the female split.  
-- Decide which is best, i.e. which to split on first
-- Change the hyperparameter to Gini, and print the tree like above to confirm your work
+Below, you will find a new Decision Tree Classifier with the hyperparameter *'criterion'* set to *'gini'*.
 
-Group 1 (not a dog): adoption, no adoption, no adoption  
-Group 2 (dog): adoption, adoption, adoption, no adoption, no adoption, no adoption, adoption  
+The decision tree is printed out just below.
 
-In Group 1 (male), I have: no adoption, no adoption, no adoption  
-In Group 2 (female), I have: adoption, adoption, adoption, adoption, no adoption, no adoption, adoption
+
+```python
+dt_gini = DecisionTreeClassifier(criterion='gini')
+
+X = example_sample.drop('adoption', axis=1)
+y = example_sample.adoption
+dt_gini = dt_gini.fit(X,y)
+
+from sklearn.externals.six import StringIO  
+from IPython.display import Image  
+from sklearn.tree import export_graphviz
+import pydotplus
+dot_data = StringIO()
+export_graphviz(dt_gini, out_file=dot_data,  
+                filled=True, rounded=True,
+                special_characters=True, 
+               feature_names=X.columns)
+graph = pydotplus.graph_from_dot_data(dot_data.getvalue())  
+Image(graph.create_png())
+```
+
+
+
+
+![png](index_files/index_55_0.png)
+
+
+
+
+```python
+# In pairs, calculate the gini score for each split: is_female, is_dog. 
+
+gini_is_female = None
+gini_is_male = None
+gini_total_malefemale = None
+
+gini_is_dog = None
+gini_is_cat = None
+gini_total_cat_dog = None
+
+
+```
 
 # Caveat
 
@@ -453,6 +914,20 @@ As found in *Introduction to Data Mining* by Tan et. al:
 `Studies have shown that the choice of impurity measure has little effect on the performance of decision tree induction algorithms. This is because many impurity measures are quite consistent with each other [...]. Indeed, the strategy used to prune the tree has a greater impact on the final tree than the choice of impurity measure.`
 
 # 4. Issues with Decision Trees
+  
+  - Decision trees have advantages:   
+     - They are highly interpretable and require little data preparation (no need to normalize/scale data).  
+     - They can serve as a good FSM and help improve our insight about feature importance through visualization of trees (and feature_importances_ attribue).  
+    
+    
+  - But they also have disadvantages: 
+     - They are prone to overfitting.
+     - They are highly dependent on the training data: small differences in training sets produce completely different trees.
+     - They are susceptible to class imbalance.
+     - They are greedy.
+     
+
+
 
 ### Decision trees are prone to overfitting
 
@@ -461,34 +936,123 @@ Let's add back in age_in_days and refit the tree
 
 
 ```python
-
 animal_shelter.dropna(subset=['age_upon_outcome'], inplace=True )
 df = preprocess_df(animal_shelter)
 df.shape
 ```
 
 
-```python
-from sklearn.tree import DecisionTreeClassifier
 
-dt = DecisionTreeClassifier(criterion='entropy')
+
+    (903, 4)
+
+
+
+
+```python
+
 X = df.drop(['adoption'], axis=1)
 y = df.adoption
 X.head()
 ```
 
 
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>is_dog</th>
+      <th>age_in_days</th>
+      <th>is_female</th>
+    </tr>
+    <tr>
+      <th>Unnamed: 0</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>0</td>
+      <td>46</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>0</td>
+      <td>136</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>1</td>
+      <td>575</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>0</td>
+      <td>748</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>0</td>
+      <td>75</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
 ```python
 from sklearn.model_selection import train_test_split
-X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42, test_size=.25)
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42, test_size=.2)
 X_t, X_val, y_t, y_val = train_test_split(X_train, y_train, random_state=42, test_size=.25)
 ```
 
 
 ```python
+from sklearn.tree import DecisionTreeClassifier
+
+dt = DecisionTreeClassifier()
+
 dt.fit(X_t,y_t)
 
 ```
+
+
+
+
+    DecisionTreeClassifier(class_weight=None, criterion='gini', max_depth=None,
+                           max_features=None, max_leaf_nodes=None,
+                           min_impurity_decrease=0.0, min_impurity_split=None,
+                           min_samples_leaf=1, min_samples_split=2,
+                           min_weight_fraction_leaf=0.0, presort=False,
+                           random_state=None, splitter='best')
+
+
 
 
 ```python
@@ -504,6 +1068,13 @@ graph = pydotplus.graph_from_dot_data(dot_data.getvalue())
 Image(graph.create_png())
 ```
 
+
+
+
+![png](index_files/index_66_0.png)
+
+
+
 That is a good visual to go represent an overfit tree.  Let's look at the accuracy.
 
 
@@ -512,6 +1083,13 @@ That is a good visual to go represent an overfit tree.  Let's look at the accura
 dt.score(X_t,y_t)
 ```
 
+
+
+
+    0.9722735674676525
+
+
+
 That super high accuracy score is a telltale sign of an overfit model.
 
 
@@ -519,6 +1097,13 @@ That super high accuracy score is a telltale sign of an overfit model.
 # That's a bit dropoff
 dt.score(X_val, y_val)
 ```
+
+
+
+
+    0.6906077348066298
+
+
 
 ### Bias-Variance with Decision Trees
 
@@ -541,7 +1126,7 @@ Reduce the number of leaf nodes
 Reduce the depth of the tree to build a generalized tree
 Set the depth of the tree to 3, 5, 10 depending after verification on test data
 
-**min_impurity_split :**
+**min_impurity_decrease :**
 A node will split if its impurity is above the threshold, otherwise it is a leaf.
 
 
@@ -556,94 +1141,448 @@ print(dt.score(X_val, y_val))
 
 ```
 
+    0.7486136783733827
+    0.6685082872928176
+
+
 
 ```python
-dt = DecisionTreeClassifier(max_depth=8)
-dt.fit(X_t, y_t)
-print(dt.score(X_t, y_t))
-print(dt.score(X_val, y_val))
+dot_data = StringIO()
+export_graphviz(dt, out_file=dot_data,  
+                filled=True, rounded=True,
+                special_characters=True)
+graph = pydotplus.graph_from_dot_data(dot_data.getvalue())  
+Image(graph.create_png())
 ```
+
+
+
+
+![png](index_files/index_75_0.png)
+
+
 
 Let's try limiting minimum samples per leaf:
 
 
 ```python
-dt = DecisionTreeClassifier(min_samples_leaf=3)
+dt = DecisionTreeClassifier(min_samples_leaf=10)
 dt.fit(X_t, y_t)
 print(dt.score(X_t, y_t))
 print(dt.score(X_val, y_val))
 ```
 
+    0.7948243992606284
+    0.7016574585635359
+
+
 
 ```python
-dt = DecisionTreeClassifier(min_samples_leaf=5)
+dot_data = StringIO()
+export_graphviz(dt, out_file=dot_data,  
+                filled=True, rounded=True,
+                special_characters=True)
+graph = pydotplus.graph_from_dot_data(dot_data.getvalue())  
+Image(graph.create_png())
+```
+
+
+
+
+![png](index_files/index_78_0.png)
+
+
+
+
+```python
+dt = DecisionTreeClassifier(max_leaf_nodes=10)
 dt.fit(X_t, y_t)
 print(dt.score(X_t, y_t))
 print(dt.score(X_val, y_val))
 ```
 
-## Decision trees are very senstitive to training data
+    0.767097966728281
+    0.6685082872928176
 
-Let's fit two trees that differ only by 1 sample, and look at the difference.
-
-
-```python
-dt = DecisionTreeClassifier(max_depth=5)
-X_t_sample_1 = X_t.sample(100, random_state=42)
-y_t_sample_1 = y_t[X_t_sample_1.index]
-
-dt.fit(X_t_sample_1, y_t_sample_1)
-
-
-```
 
 
 ```python
-from sklearn.externals.six import StringIO  
-from IPython.display import Image  
-from sklearn.tree import export_graphviz
-import pydotplus
 dot_data = StringIO()
 export_graphviz(dt, out_file=dot_data,  
                 filled=True, rounded=True,
-                special_characters=True, 
-               feature_names=X_t.columns)
+                special_characters=True)
 graph = pydotplus.graph_from_dot_data(dot_data.getvalue())  
 Image(graph.create_png())
 ```
 
 
+
+
+![png](index_files/index_80_0.png)
+
+
+
+# Pairs (7 minutes)
+
+Search for the optimal combination of hyperparamters w.r.t the accuracy of the validation set. 
+
+Report back best parameters as well as validation score.
+
+
+
+
+
 ```python
-dt = DecisionTreeClassifier(max_depth=5)
-X_t_sample_2 = X_t_sample_1.sample(99, random_state=8)
-y_t_sample_2 = y_t[X_t_sample_2.index]
+# Your code here
+```
 
-dt.fit(X_t_sample_2, y_t_sample_2)
+# Grid Search
 
+That is a lot of guess work.  Luckily, we have a tool called Grid Search which will make our lives a lot easier.  
+
+Grid search takes a dictionary of paramater key words and values as an argument, iterates through all the possible combinations of those parameters and cross validates each model, then returns the parameter combination which performs best on the validation set.
+
+While grid search is very convenient, it requires knowledge of what parameters each type of model requires as well as what values those paramters accept.  
+
+It can also take a really long time.
+
+
+```python
+param_grid = [
+  {'criterion': ['gini', 'entropy'], 
+   'max_leaf_nodes': list(range(2,20)),
+   'max_depth': list(range(2,10)),
+   'min_impurity_decrease': np.linspace(0,1,10)} 
+             ]
 ```
 
 
 ```python
-from sklearn.externals.six import StringIO  
-from IPython.display import Image  
-from sklearn.tree import export_graphviz
-import pydotplus
-dot_data = StringIO()
-export_graphviz(dt, out_file=dot_data,  
-                filled=True, rounded=True,
-                special_characters=True,
-                   feature_names=X_t.columns)
-graph = pydotplus.graph_from_dot_data(dot_data.getvalue())  
-Image(graph.create_png())
+from sklearn.model_selection import GridSearchCV
+
+gs = GridSearchCV(DecisionTreeClassifier(), param_grid=param_grid, cv=4, 
+                  return_train_score=True, refit=True)
+gs.fit(X_train, y_train)
 ```
+
+    /Users/johnmaxbarry/anaconda3/envs/learn-env/lib/python3.6/site-packages/sklearn/model_selection/_search.py:813: DeprecationWarning: The default of the `iid` parameter will change from True to False in version 0.22 and will be removed in 0.24. This will change numeric results when test-set sizes are unequal.
+      DeprecationWarning)
+
+
+
+
+
+    GridSearchCV(cv=4, error_score='raise-deprecating',
+                 estimator=DecisionTreeClassifier(class_weight=None,
+                                                  criterion='gini', max_depth=None,
+                                                  max_features=None,
+                                                  max_leaf_nodes=None,
+                                                  min_impurity_decrease=0.0,
+                                                  min_impurity_split=None,
+                                                  min_samples_leaf=1,
+                                                  min_samples_split=2,
+                                                  min_weight_fraction_leaf=0.0,
+                                                  presort=False, random_state=None,
+                                                  splitter='best'),
+                 iid='warn', n...
+                 param_grid=[{'criterion': ['gini', 'entropy'],
+                              'max_depth': [2, 3, 4, 5, 6, 7, 8, 9],
+                              'max_leaf_nodes': [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
+                                                 13, 14, 15, 16, 17, 18, 19],
+                              'min_impurity_decrease': array([0.        , 0.11111111, 0.22222222, 0.33333333, 0.44444444,
+           0.55555556, 0.66666667, 0.77777778, 0.88888889, 1.        ])}],
+                 pre_dispatch='2*n_jobs', refit=True, return_train_score=True,
+                 scoring=None, verbose=0)
+
+
+
+
+```python
+gs.__dict__.keys()
+```
+
+
+
+
+    dict_keys(['scoring', 'estimator', 'n_jobs', 'iid', 'refit', 'cv', 'verbose', 'pre_dispatch', 'error_score', 'return_train_score', 'param_grid', 'multimetric_', 'best_index_', 'best_score_', 'best_params_', 'best_estimator_', 'refit_time_', 'scorer_', 'cv_results_', 'n_splits_'])
+
+
+
+
+```python
+gs.best_score_
+```
+
+
+
+
+    0.7313019390581718
+
+
+
+
+```python
+gs.best_params_
+```
+
+
+
+
+    {'criterion': 'gini',
+     'max_depth': 7,
+     'max_leaf_nodes': 17,
+     'min_impurity_decrease': 0.0}
+
+
+
+
+```python
+gs.best_estimator_.score(X_test, y_test)
+```
+
+
+
+
+    0.7016574585635359
+
+
 
 ## Greediness
 
 Decision trees will always split on the features with the most advantageous split. 
 
-Take the above example.  The algorithm never uses the is_dog or is_female columns. This could obscure valuable information held in those variables.  
+This could obscure valuable information held in those variables.  
 
-We will see how to overcome greediness with Random Forests.
+For example, just for fun, let's dummy all of the colors of the animals.
+
+
+
+
+```python
+animal_shelter = pd.read_csv('data/austin.csv')
+animal_shelter.set_index('Unnamed: 0', inplace=True)
+animal_shelter.dropna(subset=['age_upon_outcome'], inplace=True )
+color = animal_shelter.color
+df = preprocess_df(animal_shelter)
+
+# Add color back in to the dataset
+df['color'] = color
+df.color.value_counts()
+```
+
+
+
+
+    Black/White         96
+    Black               73
+    Brown/White         43
+    White               38
+    Brown Tabby         38
+                        ..
+    White/Blue Merle     1
+    Black/Tricolor       1
+    Tricolor/Black       1
+    White/Chocolate      1
+    Fawn/White           1
+    Name: color, Length: 112, dtype: int64
+
+
+
+The decision tree very rarely uses color as a split. Most often, age in days is chosen as the optimal split.  
+
+
+```python
+# Let's consolodate into Black/White/Other
+
+def color_selector(color):
+    if color == 'Black':
+        return 'Black'
+    elif color == 'White':
+        return 'White'
+    else:
+        return 'other'
+    
+df['color'] = df['color'].apply(color_selector)
+df.color.value_counts()
+```
+
+
+
+
+    other    792
+    Black     73
+    White     38
+    Name: color, dtype: int64
+
+
+
+
+```python
+X = df.drop('adoption', axis=1)
+y = df.adoption
+
+X = X.join(pd.get_dummies(X.color, drop_first=True))
+X.drop('color', axis=1, inplace=True)
+X.head()
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>is_dog</th>
+      <th>age_in_days</th>
+      <th>is_female</th>
+      <th>White</th>
+      <th>other</th>
+    </tr>
+    <tr>
+      <th>Unnamed: 0</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>0</td>
+      <td>46</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>0</td>
+      <td>136</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>1</td>
+      <td>575</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>0</td>
+      <td>748</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>0</td>
+      <td>75</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+```python
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42, test_size=.2)
+
+param_grid = [
+  {'criterion': ['gini', 'entropy'], 
+   'max_leaf_nodes': list(range(2,20)),
+   'max_depth': list(range(2,10)),} 
+             ]
+
+from sklearn.model_selection import GridSearchCV
+
+gs = GridSearchCV(DecisionTreeClassifier(), param_grid=param_grid, cv=4, 
+                  return_train_score=True, refit=True)
+gs.fit(X_train, y_train)
+```
+
+    /Users/johnmaxbarry/anaconda3/envs/learn-env/lib/python3.6/site-packages/sklearn/model_selection/_search.py:813: DeprecationWarning: The default of the `iid` parameter will change from True to False in version 0.22 and will be removed in 0.24. This will change numeric results when test-set sizes are unequal.
+      DeprecationWarning)
+
+
+
+
+
+    GridSearchCV(cv=4, error_score='raise-deprecating',
+                 estimator=DecisionTreeClassifier(class_weight=None,
+                                                  criterion='gini', max_depth=None,
+                                                  max_features=None,
+                                                  max_leaf_nodes=None,
+                                                  min_impurity_decrease=0.0,
+                                                  min_impurity_split=None,
+                                                  min_samples_leaf=1,
+                                                  min_samples_split=2,
+                                                  min_weight_fraction_leaf=0.0,
+                                                  presort=False, random_state=None,
+                                                  splitter='best'),
+                 iid='warn', n_jobs=None,
+                 param_grid=[{'criterion': ['gini', 'entropy'],
+                              'max_depth': [2, 3, 4, 5, 6, 7, 8, 9],
+                              'max_leaf_nodes': [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
+                                                 13, 14, 15, 16, 17, 18, 19]}],
+                 pre_dispatch='2*n_jobs', refit=True, return_train_score=True,
+                 scoring=None, verbose=0)
+
+
+
+
+```python
+gs.best_score_
+```
+
+
+
+
+    0.7299168975069252
+
+
+
+
+```python
+dot_data = StringIO()
+export_graphviz(gs.best_estimator_, out_file=dot_data,  
+                filled=True, rounded=True,
+                special_characters=True,
+               feature_names=X.columns)
+graph = pydotplus.graph_from_dot_data(dot_data.getvalue())  
+Image(graph.create_png())
+```
+
+
+
+
+![png](index_files/index_98_0.png)
+
 
 
 
@@ -655,13 +1594,17 @@ The fitted tree has an attribute called `ct.feature_importances_`. What does thi
 
 
 ```python
-dt = DecisionTreeClassifier(max_depth=8)
-dt.fit(X_t, y_t)
-
-for fi, feature in zip(dt.feature_importances_, X_t.columns):
+for fi, feature in zip(gs.best_estimator_.feature_importances_, X_train.columns):
     print(fi, feature)
 
 ```
+
+    0.04623807055011041 is_dog
+    0.9368897444155458 age_in_days
+    0.016872185034343727 is_female
+    0.0 White
+    0.0 other
+
 
 More on feature importances [here](https://towardsdatascience.com/the-mathematics-of-decision-trees-random-forest-and-feature-importance-in-scikit-learn-and-spark-f2861df67e3)
 
@@ -671,52 +1614,12 @@ Decision Tree is a white box type of ML algorithm. It shares internal decision-m
 
 #### Pros
 - Decision trees are easy to interpret and visualize.
-- It can easily capture non-linear patterns.
-- It requires little data preprocessing from the user, for example, there is no need to normalize columns.
-- It can be used for feature engineering such as predicting missing values, suitable for variable selection.
-- The decision tree has no assumptions about distribution because of the non-parametric nature of the algorithm.
+- They can easily capture non-linear patterns.
+- They require little data preprocessing from the user, for example, there is no need to normalize columns.
+- They can be used for feature engineering such as predicting missing values, suitable for variable selection.
+- Decision trees have no assumptions about distribution because of the non-parametric nature of the algorithm.
 
 #### Cons
 - Sensitive to noisy data. It can overfit noisy data.
 - The small variation(or variance) in data can result in the different decision tree. This can be reduced by bagging and boosting algorithms.
 - Decision trees are biased with imbalance dataset, so it is recommended that balance out the dataset before creating the decision tree.
-
-# 6. Grid Search
-
-
-```python
-X = df.drop(['adoption'], axis=1)
-y = df.adoption
-
-X_train, X_test, y_train, y_test = train_test_split(X,y, random_state=42, test_size = .2)
-```
-
-
-```python
-param_grid = [
-  {'criterion': ['gini', 'entropy'], 
-   'max_leaf_nodes': list(range(1,10)),
-   'max_depth': list(range(2,10))} 
-             ]
-```
-
-
-```python
-from sklearn.model_selection import GridSearchCV
-```
-
-
-```python
-search = GridSearchCV(DecisionTreeClassifier(), param_grid=param_grid, cv=5)
-search.fit(X_train, y_train)
-```
-
-
-```python
-search.best_estimator_
-```
-
-
-```python
-search.best_estimator_.score(X_train, y_train)
-```
