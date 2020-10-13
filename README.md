@@ -291,16 +291,20 @@ gini_is_female = 3/3*(1-3/3) + 0/3*(1-0/3)
 gini_is_male = 2/7 * (1-2/7) + 5/7 * (1-5/7)
 gini_total_malefemale = 3/10 * gini_is_female + 7/10* gini_is_male
 
+print(gini_is_male)
 print(gini_total_malefemale)
 
 gini_is_dog = 1/2 * (1-1/2) + 1/2 * (1-1/2)
 gini_is_cat = 1/5 * (1-1/5) + 4/5 * (1-4/5)
 gini_total_cat_dog = 2/7*gini_is_dog + 5/7*gini_is_cat
 
+print(gini_is_dog)
 print(gini_total_cat_dog)
 ```
 
+    0.40816326530612246
     0.2857142857142857
+    0.5
     0.37142857142857144
 
 
@@ -313,16 +317,10 @@ As found in *Introduction to Data Mining* by Tan et. al:
 
 # 4. Issues with Decision Trees
   
-  - Decision trees have advantages:   
-     - They are highly interpretable and require little data preparation (no need to normalize/scale data).  
-     - They can serve as a good FSM and help improve our insight about feature importance through visualization of trees (and feature_importances_ attribue).  
-    
-    
-  - But they also have disadvantages: 
-     - They are prone to overfitting.
-     - They are highly dependent on the training data: small differences in training sets produce completely different trees.
-     - They are susceptible to class imbalance.
-     - They are greedy.
+  - They are prone to overfitting.
+  - They are highly dependent on the training data: small differences in training sets produce completely different trees.
+  - They are susceptible to class imbalance.
+  - They are greedy.
      
 
 
