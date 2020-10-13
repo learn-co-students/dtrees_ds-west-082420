@@ -22,9 +22,6 @@ from src.student_list import student_first_names
 one_random_student(student_first_names)
 ```
 
-    Sindhu
-
-
 
 ```python
 import pandas as pd
@@ -43,10 +40,6 @@ module_path = os.path.abspath(os.path.join(os.pardir, os.pardir))
 if module_path not in sys.path:
     sys.path.append(module_path)
 ```
-
-    The autoreload extension is already loaded. To reload it, use:
-      %reload_ext autoreload
-
 
 
 ```python
@@ -84,138 +77,6 @@ animal_shelter.head()
 ```
 
 
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>animal_id</th>
-      <th>datetime</th>
-      <th>monthyear</th>
-      <th>date_of_birth</th>
-      <th>outcome_type</th>
-      <th>outcome_subtype</th>
-      <th>animal_type</th>
-      <th>sex_upon_outcome</th>
-      <th>age_upon_outcome</th>
-      <th>breed</th>
-      <th>color</th>
-      <th>name</th>
-    </tr>
-    <tr>
-      <th>Unnamed: 0</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>A819400</td>
-      <td>2020-06-28T08:22:00.000</td>
-      <td>2020-06-28T08:22:00.000</td>
-      <td>2018-06-27T00:00:00.000</td>
-      <td>Euthanasia</td>
-      <td>Suffering</td>
-      <td>Other</td>
-      <td>Unknown</td>
-      <td>2 years</td>
-      <td>Squirrel</td>
-      <td>Brown/White</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>A819025</td>
-      <td>2020-06-27T15:26:00.000</td>
-      <td>2020-06-27T15:26:00.000</td>
-      <td>2020-05-12T00:00:00.000</td>
-      <td>Died</td>
-      <td>In Foster</td>
-      <td>Cat</td>
-      <td>Intact Female</td>
-      <td>1 month</td>
-      <td>Domestic Shorthair Mix</td>
-      <td>Blue Tabby</td>
-      <td>*Eloise</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>A818693</td>
-      <td>2020-06-27T14:21:00.000</td>
-      <td>2020-06-27T14:21:00.000</td>
-      <td>2020-02-12T00:00:00.000</td>
-      <td>Adoption</td>
-      <td>NaN</td>
-      <td>Cat</td>
-      <td>Spayed Female</td>
-      <td>4 months</td>
-      <td>Domestic Shorthair</td>
-      <td>Orange Tabby</td>
-      <td>*Aislinn</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>A809756</td>
-      <td>2020-06-27T12:43:00.000</td>
-      <td>2020-06-27T12:43:00.000</td>
-      <td>2018-11-30T00:00:00.000</td>
-      <td>Adoption</td>
-      <td>NaN</td>
-      <td>Dog</td>
-      <td>Spayed Female</td>
-      <td>1 year</td>
-      <td>Labrador Retriever/Pit Bull</td>
-      <td>Brown/Tricolor</td>
-      <td>Roxy</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>A819382</td>
-      <td>2020-06-27T10:19:00.000</td>
-      <td>2020-06-27T10:19:00.000</td>
-      <td>2018-06-27T00:00:00.000</td>
-      <td>Euthanasia</td>
-      <td>Suffering</td>
-      <td>Other</td>
-      <td>Unknown</td>
-      <td>2 years</td>
-      <td>Raccoon</td>
-      <td>Gray/Black</td>
-      <td>NaN</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-
-
 ```python
 from src.shelter_preprocess import preprocess_df
 
@@ -227,90 +88,11 @@ animal_shelter.dropna(subset=['age_upon_outcome'], inplace=True )
 print(f'{auo_na} age_upon_outome N/A\'s dropped')
 ```
 
-    6 age_upon_outome N/A's dropped
-
-
 
 ```python
 df = preprocess_df(animal_shelter)
 df.head()
 ```
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>is_dog</th>
-      <th>age_in_days</th>
-      <th>is_female</th>
-      <th>adoption</th>
-    </tr>
-    <tr>
-      <th>Unnamed: 0</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1</th>
-      <td>0</td>
-      <td>46</td>
-      <td>1</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>0</td>
-      <td>136</td>
-      <td>1</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1</td>
-      <td>575</td>
-      <td>1</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>0</td>
-      <td>748</td>
-      <td>1</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>0</td>
-      <td>75</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
 
 # New sklearn module: tree
 https://scikit-learn.org/stable/modules/tree.html
@@ -336,75 +118,6 @@ X_train.head()
 ```
 
 
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>is_dog</th>
-      <th>age_in_days</th>
-      <th>is_female</th>
-    </tr>
-    <tr>
-      <th>Unnamed: 0</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>13</th>
-      <td>0</td>
-      <td>79</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>934</th>
-      <td>0</td>
-      <td>738</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>416</th>
-      <td>0</td>
-      <td>39</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>912</th>
-      <td>0</td>
-      <td>733</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>882</th>
-      <td>1</td>
-      <td>423</td>
-      <td>0</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-
-
 ```python
 # Let's do a secondary train/val split.  
 # I'll set test_size to .25 to match my crossval 4 fold used later.
@@ -416,12 +129,6 @@ print(f"X_val {X_val.shape[0]} and y_val {y_val.shape[0]} have the same number o
 
 ```
 
-    X_t   541 and y_t   541 have the same number of records
-    
-    X_val 181 and y_val 181 have the same number of records
-    
-
-
 The methods associated with fitting decision tree classifier are similar to those attached to linear, logistic or knn.  
 
 With your knowledge built up thus far, build an FSM: fit a dtree and score it on the validation set.
@@ -430,9 +137,6 @@ With your knowledge built up thus far, build an FSM: fit a dtree and score it on
 ```python
 one_random_student(student_first_names)
 ```
-
-    Josh
-
 
 
 ```python
@@ -458,14 +162,6 @@ cm
 ```
 
 
-
-
-    array([[70, 25],
-           [32, 54]])
-
-
-
-
 ```python
 print(f'Accuracy Score: {accuracy_score(y_val, y_hat_val)}')
 print('-------------------')
@@ -478,17 +174,6 @@ print('-------------------')
 print(f'roc_auc_score{roc_auc_score(y_val, y_hat_val)}')
 
 ```
-
-    Accuracy Score: 0.6850828729281768
-    -------------------
-    Precision score: 0.6835443037974683
-    -------------------
-    Recall Score: 0.627906976744186
-    -------------------
-    f1_score: 0.6545454545454547
-    -------------------
-    roc_auc_score0.682374541003672
-
 
 If you were building a model for the animal shelter, which metric would you focus on?
 
@@ -531,99 +216,6 @@ example_sample.drop('age_in_days',axis=1, inplace=True)
 example_sample.reset_index(inplace=True, drop=True)
 example_sample.head(10)
 ```
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>is_dog</th>
-      <th>is_female</th>
-      <th>adoption</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
 
 ## Partitioning
 
@@ -692,13 +284,6 @@ graph = pydotplus.graph_from_dot_data(dot_data.getvalue())
 Image(graph.create_png())
 ```
 
-
-
-
-![png](index_files/index_39_0.png)
-
-
-
 The entropy of the whole dataset is given by:
 
 $\large E = -\Sigma^n_i p_i\log_2(p_i)$,
@@ -759,10 +344,6 @@ Eg2 =(-3/7)*np.log2(3/7) - (4/7)*np.log2(4/7)
 print(Eg2)
 ```
 
-    0.9182958340544896
-    0.9852281360342515
-
-
 Now weight those by the probability of each group, and sum them, to find the entropy of the split:
 
 
@@ -773,13 +354,6 @@ pg2 = (7/10) * Eg2
 E_split_d = pg1 + pg2
 E_split_d
 ```
-
-
-
-
-    0.965148445440323
-
-
 
 Compare that to the male/female question:
 
@@ -798,10 +372,6 @@ print(Egf)
 
 ```
 
-    -0.0
-    0.863120568566631
-
-
 Weighted sum
 
 
@@ -812,13 +382,6 @@ pgf = Egf * 7/10
 E_split_f = pgm + pgf
 E_split_f
 ```
-
-
-
-
-    0.6041843979966417
-
-
 
 For a given split, the **information gain** is simply the entropy of the parent group less the entropy of the split.
 
@@ -837,10 +400,6 @@ print(f"Information gain male/female: {ig_f}")
 
 
 ```
-
-    Information gain dog/cat: 0.034851554559677034
-    Information gain male/female: 0.3958156020033583
-
 
 For a given parent, then, we maximize our model's performance by *minimizing* the split's entropy.
 
@@ -887,13 +446,6 @@ Image(graph.create_png())
 ```
 
 
-
-
-![png](index_files/index_56_0.png)
-
-
-
-
 ```python
 # In pairs, calculate the gini score for each split: is_female, is_dog. 
 
@@ -938,88 +490,12 @@ df.shape
 ```
 
 
-
-
-    (903, 4)
-
-
-
-
 ```python
 
 X = df.drop(['adoption'], axis=1)
 y = df.adoption
 X.head()
 ```
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>is_dog</th>
-      <th>age_in_days</th>
-      <th>is_female</th>
-    </tr>
-    <tr>
-      <th>Unnamed: 0</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1</th>
-      <td>0</td>
-      <td>46</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>0</td>
-      <td>136</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1</td>
-      <td>575</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>0</td>
-      <td>748</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>0</td>
-      <td>75</td>
-      <td>0</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
 
 
 ```python
@@ -1036,18 +512,6 @@ dt.fit(X_t,y_t)
 ```
 
 
-
-
-    DecisionTreeClassifier(ccp_alpha=0.0, class_weight=None, criterion='gini',
-                           max_depth=None, max_features=None, max_leaf_nodes=None,
-                           min_impurity_decrease=0.0, min_impurity_split=None,
-                           min_samples_leaf=1, min_samples_split=2,
-                           min_weight_fraction_leaf=0.0, presort='deprecated',
-                           random_state=None, splitter='best')
-
-
-
-
 ```python
 dot_data = StringIO()
 export_graphviz(dt, out_file=dot_data,  
@@ -1057,13 +521,6 @@ graph = pydotplus.graph_from_dot_data(dot_data.getvalue())
 Image(graph.create_png())
 ```
 
-
-
-
-![png](index_files/index_67_0.png)
-
-
-
 That is a good visual to go represent an overfit tree.  Let's look at the accuracy.
 
 
@@ -1072,13 +529,6 @@ That is a good visual to go represent an overfit tree.  Let's look at the accura
 dt.score(X_t,y_t)
 ```
 
-
-
-
-    0.9722735674676525
-
-
-
 That super high accuracy score is a telltale sign of an overfit model.
 
 
@@ -1086,13 +536,6 @@ That super high accuracy score is a telltale sign of an overfit model.
 # That's a bit dropoff
 dt.score(X_val, y_val)
 ```
-
-
-
-
-    0.6850828729281768
-
-
 
 ### Bias-Variance with Decision Trees
 
@@ -1130,10 +573,6 @@ print(dt.score(X_val, y_val))
 
 ```
 
-    0.7486136783733827
-    0.6685082872928176
-
-
 
 ```python
 dot_data = StringIO()
@@ -1143,13 +582,6 @@ export_graphviz(dt, out_file=dot_data,
 graph = pydotplus.graph_from_dot_data(dot_data.getvalue())  
 Image(graph.create_png())
 ```
-
-
-
-
-![png](index_files/index_76_0.png)
-
-
 
 Let's try limiting minimum samples per leaf:
 
@@ -1161,10 +593,6 @@ print(dt.score(X_t, y_t))
 print(dt.score(X_val, y_val))
 ```
 
-    0.7948243992606284
-    0.7016574585635359
-
-
 
 ```python
 dot_data = StringIO()
@@ -1174,13 +602,6 @@ export_graphviz(dt, out_file=dot_data,
 graph = pydotplus.graph_from_dot_data(dot_data.getvalue())  
 Image(graph.create_png())
 ```
-
-
-
-
-![png](index_files/index_79_0.png)
-
-
 
 
 ```python
@@ -1190,10 +611,6 @@ print(dt.score(X_t, y_t))
 print(dt.score(X_val, y_val))
 ```
 
-    0.767097966728281
-    0.6685082872928176
-
-
 
 ```python
 dot_data = StringIO()
@@ -1203,13 +620,6 @@ export_graphviz(dt, out_file=dot_data,
 graph = pydotplus.graph_from_dot_data(dot_data.getvalue())  
 Image(graph.create_png())
 ```
-
-
-
-
-![png](index_files/index_81_0.png)
-
-
 
 # Pairs (7 minutes)
 
@@ -1255,44 +665,9 @@ gs.fit(X_train, y_train)
 ```
 
 
-
-
-    GridSearchCV(cv=4, error_score=nan,
-                 estimator=DecisionTreeClassifier(ccp_alpha=0.0, class_weight=None,
-                                                  criterion='gini', max_depth=None,
-                                                  max_features=None,
-                                                  max_leaf_nodes=None,
-                                                  min_impurity_decrease=0.0,
-                                                  min_impurity_split=None,
-                                                  min_samples_leaf=1,
-                                                  min_samples_split=2,
-                                                  min_weight_fraction_leaf=0.0,
-                                                  presort='deprecated',
-                                                  random_state=None,
-                                                  splitter='best'),
-                 iid='de...
-                 param_grid=[{'criterion': ['gini', 'entropy'],
-                              'max_depth': [2, 3, 4, 5, 6, 7, 8, 9],
-                              'max_leaf_nodes': [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
-                                                 13, 14, 15, 16, 17, 18, 19],
-                              'min_impurity_decrease': array([0.        , 0.11111111, 0.22222222, 0.33333333, 0.44444444,
-           0.55555556, 0.66666667, 0.77777778, 0.88888889, 1.        ])}],
-                 pre_dispatch='2*n_jobs', refit=True, return_train_score=True,
-                 scoring=None, verbose=0)
-
-
-
-
 ```python
 gs.__dict__.keys()
 ```
-
-
-
-
-    dict_keys(['scoring', 'estimator', 'n_jobs', 'iid', 'refit', 'cv', 'verbose', 'pre_dispatch', 'error_score', 'return_train_score', 'param_grid', 'multimetric_', 'best_index_', 'best_score_', 'best_params_', 'best_estimator_', 'refit_time_', 'scorer_', 'cv_results_', 'n_splits_'])
-
-
 
 
 ```python
@@ -1300,38 +675,14 @@ gs.best_score_
 ```
 
 
-
-
-    0.7313228974831185
-
-
-
-
 ```python
 gs.best_params_
 ```
 
 
-
-
-    {'criterion': 'gini',
-     'max_depth': 7,
-     'max_leaf_nodes': 17,
-     'min_impurity_decrease': 0.0}
-
-
-
-
 ```python
 gs.best_estimator_.score(X_test, y_test)
 ```
-
-
-
-
-    0.7016574585635359
-
-
 
 ## Greediness
 
@@ -1356,24 +707,6 @@ df['color'] = color
 df.color.value_counts()
 ```
 
-
-
-
-    Black/White            96
-    Black                  73
-    Brown/White            43
-    White                  38
-    Brown Tabby            38
-                           ..
-    Black/Brown Brindle     1
-    Chocolate/Tan           1
-    Apricot                 1
-    Sable/Black             1
-    White/Cream Tabby       1
-    Name: color, Length: 112, dtype: int64
-
-
-
 The decision tree very rarely uses color as a split. Most often, age in days is chosen as the optimal split.  
 
 
@@ -1393,16 +726,6 @@ df.color.value_counts()
 ```
 
 
-
-
-    other    792
-    Black     73
-    White     38
-    Name: color, dtype: int64
-
-
-
-
 ```python
 X = df.drop('adoption', axis=1)
 y = df.adoption
@@ -1411,96 +734,6 @@ X = X.join(pd.get_dummies(X.color))
 X.drop('color', axis=1, inplace=True)
 X.head()
 ```
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>is_dog</th>
-      <th>age_in_days</th>
-      <th>is_female</th>
-      <th>Black</th>
-      <th>White</th>
-      <th>other</th>
-    </tr>
-    <tr>
-      <th>Unnamed: 0</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1</th>
-      <td>0</td>
-      <td>46</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>0</td>
-      <td>136</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1</td>
-      <td>575</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>0</td>
-      <td>748</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>0</td>
-      <td>75</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
 
 
 ```python
@@ -1520,42 +753,9 @@ gs.fit(X_train, y_train)
 ```
 
 
-
-
-    GridSearchCV(cv=4, error_score=nan,
-                 estimator=DecisionTreeClassifier(ccp_alpha=0.0, class_weight=None,
-                                                  criterion='gini', max_depth=None,
-                                                  max_features=None,
-                                                  max_leaf_nodes=None,
-                                                  min_impurity_decrease=0.0,
-                                                  min_impurity_split=None,
-                                                  min_samples_leaf=1,
-                                                  min_samples_split=2,
-                                                  min_weight_fraction_leaf=0.0,
-                                                  presort='deprecated',
-                                                  random_state=None,
-                                                  splitter='best'),
-                 iid='deprecated', n_jobs=None,
-                 param_grid=[{'criterion': ['gini', 'entropy'],
-                              'max_depth': [2, 3, 4, 5, 6, 7, 8, 9],
-                              'max_leaf_nodes': [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
-                                                 13, 14, 15, 16, 17, 18, 19]}],
-                 pre_dispatch='2*n_jobs', refit=True, return_train_score=True,
-                 scoring=None, verbose=0)
-
-
-
-
 ```python
 gs.best_score_
 ```
-
-
-
-
-    0.7299340085942296
-
-
 
 
 ```python
@@ -1567,13 +767,6 @@ export_graphviz(gs.best_estimator_, out_file=dot_data,
 graph = pydotplus.graph_from_dot_data(dot_data.getvalue())  
 Image(graph.create_png())
 ```
-
-
-
-
-![png](index_files/index_99_0.png)
-
-
 
 
 ## Feature Importances
@@ -1588,14 +781,6 @@ for fi, feature in zip(gs.best_estimator_.feature_importances_, X_train.columns)
     print(fi, feature)
 
 ```
-
-    0.04623807055011041 is_dog
-    0.9368897444155458 age_in_days
-    0.016872185034343727 is_female
-    0.0 Black
-    0.0 White
-    0.0 other
-
 
 More on feature importances [here](https://towardsdatascience.com/the-mathematics-of-decision-trees-random-forest-and-feature-importance-in-scikit-learn-and-spark-f2861df67e3)
 
