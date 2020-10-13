@@ -20,13 +20,6 @@ What effect does L2 ridge penalty have on model coefficients?
 "L1 Lasso zeros out the coefficients. L2 ridge shrinks the coefficients, but does not zero them out."
 ```
 
-
-
-
-    'L1 Lasso zeros out the coefficients. L2 ridge shrinks the coefficients, but does not zero them out.'
-
-
-
 # 1. FSM and Metric Discussion
 
 # New sklearn module: tree
@@ -44,10 +37,6 @@ y_hat_val = dt.predict(X_val)
 print(f'Training Score: {dt.score(X_t, y_t)}')
 print(f'Val      Score: {dt.score(X_val, y_val)}')
 ```
-
-    Training Score: 0.9722735674676525
-    Val      Score: 0.6850828729281768
-
 
 If you were building a model for the animal shelter, which metric would you focus on?
 
@@ -154,13 +143,6 @@ would perform fairly well.
 '''
 ```
 
-
-
-
-    "\nLet's look at our splits:\n\n- Group 1 (Female = 0):\n\ndata points: 5,7,8\n\n- Group 2 (Female = 1):\n\n\ndata points: 0,1,2,3,4,6,9\n\n\nIn Group 1, I have: no adoption, no adoption, no adoption  \nIn Group 2, I have: adoption, adoption, adoption, adoption, no adoption, no adoption, adoption\n\nThat seems better:  \n  - Group 1 is a pure group, no adoption when sex is male\n  - Group 2 has 5/7 adoptions.\n  \nThis seems like a much better split.\n\nSo a (very simple!) model based on the above sample predicts:  \n(i) A female animal will be adopted  \n(ii) A male animal will not be adopted  \n\nwould perform fairly well.  \n\n"
-
-
-
 But how would my partition be *best* split? How do I really know one split is better than the other? Can I do better than intuition here?  
 
 # 3. Entropy/Information Gain and Gini
@@ -192,13 +174,6 @@ Let's use the ``numpy's`` `log2()` function to calculate this:
 (-.5) * np.log2(.5) - (.5) * np.log2(.5)
 ```
 
-
-
-
-    1.0
-
-
-
 Now, let's calculate the entropy of the training set.
 
 
@@ -222,18 +197,6 @@ def entropy(p_0,p_1):
 
 entropy(p_0, p_1)
 ```
-
-    [0 1]
-    [278 263]
-    0.5138632162661737 0.48613678373382624
-
-
-
-
-
-    0.9994453893702337
-
-
 
 To calculate the entropy of a *split*, we're going to want to calculate the entropy of each of the groups made by the split, and then calculate a weighted average of those groups' entropies––weighted, that is, by the size of the groups. Let's calculate the entropy of the split produced by our "is our animal a dog" question:
 
@@ -301,12 +264,6 @@ gini_total_cat_dog = 2/7*gini_is_dog + 5/7*gini_is_cat
 print(gini_is_dog)
 print(gini_total_cat_dog)
 ```
-
-    0.40816326530612246
-    0.2857142857142857
-    0.5
-    0.37142857142857144
-
 
 # Caveat
 
