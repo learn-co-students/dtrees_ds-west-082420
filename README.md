@@ -318,6 +318,10 @@ A node will split if its impurity is above the threshold, otherwise it is a leaf
 
 Let's try limiting the depth:
 
+# Zoom in on this one
+
+![dt_md5](img/dt_md5.svg)
+
 Let's try limiting minimum samples per leaf:
 
 # Pairs (7 minutes)
