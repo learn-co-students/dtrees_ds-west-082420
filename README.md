@@ -170,11 +170,14 @@ print(f'Val      Score: {dt.score(X_val, y_val)}')
 
 
 ```python
-from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score, f1_score, roc_auc_score
+from sklearn.metrics import plot_confusion_matrix, confusion_matrix, accuracy_score, precision_score, recall_score, f1_score, roc_auc_score
 
+fig, ax = plt.subplots()
+plot_confusion_matrix(dt, X_val, y_val, ax=ax, cmap='bwr')
 
-cm = confusion_matrix(y_val, y_hat_val)
-cm
+ax.set_yticklabels(['no adoption', 'adoption'])
+ax.set_xticklabels(['no adoption', 'adoption']);
+
 ```
 
 
@@ -321,18 +324,8 @@ dtree = dt.fit(X,y)
 
 
 ```python
-from sklearn.externals.six import StringIO  
-from IPython.display import Image  
-from sklearn.tree import export_graphviz
-import pydotplus
-
-dot_data = StringIO()
-export_graphviz(dt, out_file=dot_data,  
-                filled=True, rounded=True,
-                special_characters=True,
-                feature_names=X.columns)
-graph = pydotplus.graph_from_dot_data(dot_data.getvalue())  
-Image(graph.create_png())
+from sklearn.tree import plot_tree
+plot_tree(dt, feature_names=X.columns, filled=True);
 ```
 
 The entropy of the whole dataset is given by:
@@ -516,13 +509,7 @@ X = example_sample.drop('adoption', axis=1)
 y = example_sample.adoption
 dt_gini = dt_gini.fit(X,y)
 
-dot_data = StringIO()
-export_graphviz(dt_gini, out_file=dot_data,  
-                filled=True, rounded=True,
-                special_characters=True, 
-               feature_names=X.columns)
-graph = pydotplus.graph_from_dot_data(dot_data.getvalue())  
-Image(graph.create_png())
+plot_tree(dt_gini, feature_names=X.columns, filled=True);
 ```
 
 
@@ -612,12 +599,7 @@ dt.fit(X_t,y_t)
 
 
 ```python
-dot_data = StringIO()
-export_graphviz(dt, out_file=dot_data,  
-                filled=True, rounded=True,
-                special_characters=True)
-graph = pydotplus.graph_from_dot_data(dot_data.getvalue())  
-Image(graph.create_png())
+plot_tree(dt, feature_names=X_t.columns, filled=True);
 ```
 
 That is a good visual to go represent an overfit tree.  Let's look at the accuracy.
@@ -669,18 +651,19 @@ dt = DecisionTreeClassifier(max_depth=5)
 dt.fit(X_t, y_t)
 print(dt.score(X_t, y_t))
 print(dt.score(X_val, y_val))
-
+    
 ```
 
 
 ```python
-dot_data = StringIO()
-export_graphviz(dt, out_file=dot_data,  
-                filled=True, rounded=True,
-                special_characters=True)
-graph = pydotplus.graph_from_dot_data(dot_data.getvalue())  
-Image(graph.create_png())
+fig, ax = plt.subplots(figsize=(10,10))
+plot_tree(dt, feature_names=X_t.columns, filled=True, ax=ax)
+plt.savefig('img/dt_md5.svg');
 ```
+
+# Zoom in on this one
+
+![dt_md5](img/dt_md5.svg)
 
 Let's try limiting minimum samples per leaf:
 
@@ -694,12 +677,13 @@ print(dt.score(X_val, y_val))
 
 
 ```python
-dot_data = StringIO()
-export_graphviz(dt, out_file=dot_data,  
-                filled=True, rounded=True,
-                special_characters=True)
-graph = pydotplus.graph_from_dot_data(dot_data.getvalue())  
-Image(graph.create_png())
+fig, ax = plt.subplots(figsize=(25,25))
+plot_tree(dt, feature_names=X_t.columns, filled=True, ax=ax)
+plt.savefig('img/dt_msl10.svg')
+
+fig, ax = plt.subplots(figsize=(25,25))
+plot_tree(dt, feature_names=X_t.columns, filled=True, ax=ax, max_depth=3)
+ax.set_title('Max Samples Leaf 10:\n Look at How the Left Most Leaf Stops Splitting', fontsize=30);
 ```
 
 
@@ -712,12 +696,9 @@ print(dt.score(X_val, y_val))
 
 
 ```python
-dot_data = StringIO()
-export_graphviz(dt, out_file=dot_data,  
-                filled=True, rounded=True,
-                special_characters=True)
-graph = pydotplus.graph_from_dot_data(dot_data.getvalue())  
-Image(graph.create_png())
+fig, ax = plt.subplots(figsize=(25,25))
+plot_tree(dt, feature_names=X_t.columns, filled=True, ax=ax)
+ax.set_title('Max Leaf Nodes 10:', fontsize=30);
 ```
 
 # Pairs (7 minutes)
@@ -858,13 +839,9 @@ gs.best_score_
 
 
 ```python
-dot_data = StringIO()
-export_graphviz(gs.best_estimator_, out_file=dot_data,  
-                filled=True, rounded=True,
-                special_characters=True,
-               feature_names=X.columns)
-graph = pydotplus.graph_from_dot_data(dot_data.getvalue())  
-Image(graph.create_png())
+fig, ax = plt.subplots(figsize=(25,25))
+plot_tree(gs.best_estimator_, feature_names=X_t.columns, filled=True, ax=ax)
+ax.set_title('Max Leaf Nodes 10:', fontsize=30);
 ```
 
 
